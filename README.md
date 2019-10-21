@@ -2,16 +2,15 @@
 
 These are the methods used to extract data from tables within PDFs, including those from scanned sources. These methods use **Adobe Acrobat** and an open source program called **Tabula** to extract the data.
 
-1. If required, scan the table(s) into a new PDF document.
-2. Open the table document into Adobe Acrobat then make the tables editable.
-2.1 If the table takes up the entire document or covers multiple pages you can press *Edit* -> *Edit Text & Images* to put the whole document through preprocessing.
-2.2 If the table takes up a smaller portion of the overall document, or there are multiple tables spread throughout the document, you can remove or extract pages as required before putting it through the preprocessing.
-3. Once the text has been made editable save the PDF, then open it up in Tabula (available [here](https://tabula.technology))
-3.1 *[Tabula opens up in a browser window, but runs entirely locally.]*
-3.2 Browse to your PDF's location and then click *Import*.
-3.3 Select your imported document and click *Extract Data*
-3.4 You'll be presented with the pages of your document, over which you'll need to create a selection box to highlight the table or tables (this can be easier to do one page at a time depending on how clear the original source is), then click *Preview & Export Extracted Data*.
-3.5 The result of this process can vary greatly depending on how clear the original document is. There is an option on the left hand side to change the extraction method to either Stream or Lattice; if the data doesn't look right, try the alternative extraction method.
-3.6 The next step is to export the data into a downloadable file, which will then need to be opened and potentially cleaned up as well (the extraction process can sometimes move, remove or combine columns, rows or cells). There are various methods you might use to clean up the numerical data within the table:
-3.6.1 A combination of adding 0 to a cell and conditional formatting to highlight any non-numerical cells within a column
-3.6.2 Using a formula with a combination of LEFT, RIGHT and LEN commands to remove certain numbers of characters from a column of cells (particularly useful when Tabula has combined two columns together, and at least one of those columns always has the same number of characters
+## Step 1: Get the image into readable format
+No program will be able to read the numbers from your table without first putting the image through OCR software. For this I used Adobe Acrobat. Scan your table into Acrobat if required (or open the PDF if it's already in that format) and click *Edit -> Edit Text & Images.* This will run the document through character recognition and enable other software to read the data. *Note: If you're extracting a table from a larger document, you may want to extract specific pages from the PDF before putting the whole document through OCR.*
+
+## Step 2: Extract the data using Tabula
+Once the text has been made editable save the PDF, then open it up in Tabula, which is available [here](https://tabula.technology)). Install Tabula and open it up (it runs via a web browser, but it's run from a local location). Browse to your PDF's location and then click *Import*. Select your document and click *Extract Data*. You'll be presented with the pages of your document, over which you'll need to create a selection box to highlight the table or tables (this can be easier to do one page at a time depending on how clear the original source is), then click *Preview & Export Extracted Data*. On the next page you'll see what data Tabula has been able to read, along with two options for how it reads it: if your original table contains border lines to separate rows and columns then select *Lattice*, other leave it on *Stream*.
+
+## Step 3: Clean up the extracted data
+The result of the extraction process can vary greatly depending on how clear the original document is. You may find that some columns have been merged for example, or some characters may not have been recognised correctly. Some of the issues will be easier to fix than others.  
+
+If columns have been merged, there is no single easy way to fix it. If the data contained in one of the merged columns is a standard number of characters, it's quite a simple process to copy those characters into a new column using a combination of LEN, LEFT and RIGHT functions. If the data is more varied it may be a case of manually cutting and moving data from one column to another.  
+
+To check columns that are supposed to only contain numbers, it's recommended to use conditional formatting to highlight any cells that contain non-numerical characters. Ones and zeros can be picked up as various other characters, using find and replace is an efficient way to replace these, along with extra spaces that may get added as well.
